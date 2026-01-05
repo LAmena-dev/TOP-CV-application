@@ -7,21 +7,16 @@ import CVOutput from "./components/CVOutput";
 function App() {
   const [cvData, setCvData] = useState({
     General: {
-      title: "General Information",
       fullName: "",
       email: "",
       phoneNum: "",
     },
     Education: {
-      title: "Educational Attainment",
       school: "",
       course: "",
       gradYear: "",
     },
-    Work: {
-      title: "Work Experience",
-      companies: [],
-    },
+    Work: [],
   });
 
   function updateSection(sectionName, newData) {
@@ -34,7 +29,7 @@ function App() {
   function addWorkExperience(newExperience) {
     setCvData((prop) => ({
       ...prop,
-      Work: [...prop.Work.companies, newExperience],
+      Work: [...prop.Work, newExperience],
     }));
   }
 

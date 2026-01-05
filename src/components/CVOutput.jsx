@@ -1,7 +1,6 @@
 export default function CVOutput({ data }) {
   const { fullName, email, phoneNum } = data.General;
   const { school, course, gradYear } = data.Education;
-  const { company, position, tenure, duties } = data.Work.companies;
 
   function hasValue(value) {
     return value !== null && value !== undefined && value !== "";
@@ -45,12 +44,12 @@ export default function CVOutput({ data }) {
       <section>
         <h2>{data.Work.title}</h2>
 
-        {data.Work.companies.length === 0 ? (
+        {data.Work.length === 0 ? (
           <p>
             <i>No work experience added.</i>
           </p>
         ) : (
-          data.Work.companies.map((job, index) => {
+          data.Work.map((job, index) => (
             <div key={index}>
               <b>
                 <p>{job.company}</p>
@@ -58,8 +57,8 @@ export default function CVOutput({ data }) {
               <p>{job.position}</p>
               <p>{job.tenure}</p>
               <p>{job.duties}</p>
-            </div>;
-          })
+            </div>
+          ))
         )}
       </section>
     </div>

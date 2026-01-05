@@ -32,7 +32,7 @@ export default function Work({ initialData, onSubmit }) {
       <h2>Work Experience</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label for="company">Company name:</label>
+          <label htmlFor="company">Company name:</label>
           <input
             onChange={(e) => handleChange("company", e.target.value)}
             value={formData.company}
@@ -41,7 +41,7 @@ export default function Work({ initialData, onSubmit }) {
             name="company"
             placeholder="name of company..."
           />
-          <label for="position">Position name:</label>
+          <label htmlFor="position">Position name:</label>
           <input
             onChange={(e) => handleChange("position", e.target.value)}
             value={formData.position}
@@ -52,7 +52,7 @@ export default function Work({ initialData, onSubmit }) {
           />
         </div>
         <div>
-          <label for="dateStart">Work tenure:</label>
+          <label htmlFor="dateStart">Work tenure:</label>
           <input
             onChange={(e) => handleChange("tenure", e.target.value)}
             value={formData.tenure}
@@ -63,7 +63,7 @@ export default function Work({ initialData, onSubmit }) {
           />
         </div>
         <div>
-          <label for="duties">Duties conducted:</label>
+          <label htmlFor="duties">Duties conducted:</label>
           <input
             onChange={(e) => handleChange("duties", e.target.value)}
             value={formData.duties}
