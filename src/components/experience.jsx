@@ -1,50 +1,50 @@
 import { useState } from "react";
 
-export default function Work() {
-  const [company, setCompany] = useState("");
-  const [position, setPosition] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [duties, setDuties] = useState([]);
+export default function Work({ initialData, onSubmit }) {
+  const [formData, setFormData] = useState(() => ({
+    company: initialData?.company || "",
+    position: initialData?.position || "",
+    tenure: initialData?.tenure || "",
+    duties: initialData?.duties || "",
+  }));
 
-  function handleCompany(e) {
-    setCompany(e.target.value);
+  function handleChange(field, value) {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   }
 
-  function handlePosition(e) {
-    setPosition(e.target.value);
-  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(formData);
 
-  function handleDuties(e) {
-    setDuties(e.target.value);
-  }
-
-  function handleDateStart(e) {
-    setStartDate(e.target.value);
-  }
-
-  function handleDateEnd(e) {
-    setEndDate(e.target.value);
+    setFormData({
+      company: "",
+      position: "",
+      tenure: "",
+      duties: "",
+    });
   }
 
   return (
     <section>
-      <h1>Work Experience Information</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <h2>Work Experience</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label for="name">Company name:</label>
+          <label for="company">Company name:</label>
           <input
-            onChange={handleCompany}
-            value={company}
+            onChange={(e) => handleChange("company", e.target.value)}
+            value={formData.company}
             type="text"
             id="company"
             name="company"
             placeholder="name of company..."
           />
-          <label for="name">Position name:</label>
+          <label for="position">Position name:</label>
           <input
-            onChange={handlePosition}
-            value={position}
+            onChange={(e) => handleChange("position", e.target.value)}
+            value={formData.position}
             type="text"
             id="position"
             name="position"
@@ -52,39 +52,29 @@ export default function Work() {
           />
         </div>
         <div>
-          <label>Duties conducted:</label>
+          <label for="dateStart">Work tenure:</label>
           <input
-            onChange={handleDuties}
-            value={duties}
+            onChange={(e) => handleChange("tenure", e.target.value)}
+            value={formData.tenure}
+            type="text"
+            id="workTenure"
+            name="work_tenure"
+            placeholder="Work tenure..."
+          />
+        </div>
+        <div>
+          <label for="duties">Duties conducted:</label>
+          <input
+            onChange={(e) => handleChange("duties", e.target.value)}
+            value={formData.duties}
             type="text"
             id="duties"
             name="duties"
             placeholder="Duties conducted..."
           />
         </div>
-        <div>
-          <label for="dateStart">Date started:</label>
-          <input
-            onChange={handleDateStart}
-            value={startDate}
-            type="date"
-            id="dateStart"
-            name="date_start"
-            placeholder="date started..."
-          />
-          <label for="dateEnd">Date started:</label>
-          <input
-            onChange={handleDateEnd}
-            value={endDate}
-            type="date"
-            id="dateEnd"
-            name="date_end"
-            placeholder="date ended..."
-          />
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
+
+        <button type="submit">Submit</button>
       </form>
     </section>
   );

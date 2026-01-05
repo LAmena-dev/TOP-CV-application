@@ -1,76 +1,65 @@
 import { useState } from "react";
 
-export default function General() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+export default function General({ initialData, onSubmit }) {
+  const [formData, setFormData] = useState(() => ({
+    fullName: initialData?.fullName || "",
+    email: initialData?.email || "",
+    phoneNum: initialData?.phoneNum || "",
+  }));
 
-  function handleFirstName(e) {
-    setFirstName(e.target.value);
+  function handleChange(field, value) {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
   }
 
-  function handleLastName(e) {
-    setLastName(e.target.value);
-  }
-
-  function handleEmail(e) {
-    setEmail(e.target.value);
-  }
-  
-  function handlePhone(e) {
-    setPhone(e.target.value);
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSubmit(formData);
   }
 
   return (
     <section>
-      <h1>General Information</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <h2>General Information</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label for="name">First name:</label>
+          <label htmlFor="name">Full name:</label>
           <input
-            onChange={handleFirstName}
-            value={firstName}
+            onChange={(e) => handleChange("fullName", e.target.value)}
+            value={formData.fullName}
             type="text"
-            id="firstName"
-            name="first_name"
-            placeholder="first name..."
-          />
-          <label for="name">Last name:</label>
-          <input
-            onChange={handleLastName}
-            value={lastName}
-            type="text"
-            id="lastName"
-            name="last_name"
-            placeholder="last name..."
+            id="name"
+            name="full_name"
+            placeholder="full name..."
           />
         </div>
+
         <div>
-          <label for="email">Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
-            onChange={handleEmail}
-            value={email}
+            onChange={(e) => handleChange("email", e.target.value)}
+            value={formData.email}
             type="email"
             id="email"
             name="email"
             placeholder="email..."
           />
         </div>
+
         <div>
-          <label for="phone">Phone Number:</label>
+          <label htmlFor="phone">Phone Number:</label>
           <input
-            onChange={handlePhone}
-            value={phone}
+            onChange={(e) => handleChange("phoneNum", e.target.value)}
+            value={formData.phoneNum}
             type="text"
             id="phone"
             name="phone"
             placeholder="phone number..."
           />
         </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
+
+        <button type="submit">Submit</button>
       </form>
     </section>
   );

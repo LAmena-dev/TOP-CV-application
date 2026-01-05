@@ -1,40 +1,43 @@
+
 import { useState } from "react";
 
-export default function Education() {
-  const [school, setSchool] = useState("");
-  const [course, setCourse] = useState("");
-  const [date, setDate] = useState("");
-
-  function handleSchool(e) {
-    setSchool(e.target.value);
-  }
-
-  function handleCourse(e) {
-    setCourse(e.target.value);
-  }
-
-  function handleDate(e) {
-    setDate(e.target.value);
-  }
+export default function Education({ initialData, onSubmit }) {
+  const [formData, setFormData] = useState(() => ({
+    school: initialData?.school || "",
+    course: initialData?.course || "",
+    gradYear: initialData?.gradYear || "",
+  }));
+  
+    function handleChange(field, value) {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    }
+  
+    function handleSubmit(e) {
+      e.preventDefault();
+      onSubmit(formData);
+    }
 
   return (
     <section>
-      <h1>Educational Information</h1>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <h2>Educational Attainment</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-          <label for="name">School name:</label>
+          <label htmlFor="school">School name:</label>
           <input
-            onChange={handleSchool}
-            value={school}
+            onChange={(e) => handleChange("school", e.target.value)}
+            value={formData.school}
             type="text"
             id="school"
             name="school"
             placeholder="name of school..."
           />
-          <label for="name">Course name:</label>
+          <label htmlFor="course">Course name:</label>
           <input
-            onChange={handleCourse}
-            value={course}
+            onChange={(e) => handleChange("course", e.target.value)}
+            value={formData.course}
             type="text"
             id="course"
             name="course"
@@ -42,19 +45,18 @@ export default function Education() {
           />
         </div>
         <div>
-          <label for="Date">Date graduated:</label>
+          <label htmlFor="gradYear">Date graduated:</label>
           <input
-            onChange={handleDate}
-            value={date}
+            onChange={(e) => handleChange("gradYear", e.target.value)}
+            value={formData.gradYear}
             type="date"
-            id="date"
-            name="date"
+            id="gradYear"
+            name="grad_year"
             placeholder="date graduated..."
           />
         </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
+
+        <button type="submit">Submit</button>
       </form>
     </section>
   );
