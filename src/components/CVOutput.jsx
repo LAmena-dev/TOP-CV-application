@@ -1,4 +1,4 @@
-export default function CVOutput({ data }) {
+export default function CVOutput({ data, onDeleteWork, onEditWork }) {
   const { fullName, email, phoneNum } = data.General;
   const { school, course, gradYear } = data.Education;
 
@@ -51,12 +51,18 @@ export default function CVOutput({ data }) {
         ) : (
           data.Work.map((job, index) => (
             <div key={index}>
-              <b>
-                <p>{job.company}</p>
-              </b>
-              <p>{job.position}</p>
-              <p>{job.tenure}</p>
-              <p>{job.duties}</p>
+              <div>
+                <b>
+                  <p>{job.company}</p>
+                </b>
+                <p>{job.position}</p>
+                <p>{job.tenure}</p>
+                <p>{job.duties}</p>
+              </div>
+              <div>
+                <button onClick={() => onEditWork(index)}>Edit</button>
+                <button onClick={() => onDeleteWork(index)}>Delete</button>
+              </div>
             </div>
           ))
         )}

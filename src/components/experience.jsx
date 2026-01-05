@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Work({ initialData, onSubmit }) {
+export default function Work({ initialData, onSubmit, isEdit = false }) {
   const [formData, setFormData] = useState(() => ({
     company: initialData?.company || "",
     position: initialData?.position || "",
@@ -19,12 +19,14 @@ export default function Work({ initialData, onSubmit }) {
     e.preventDefault();
     onSubmit(formData);
 
-    setFormData({
-      company: "",
-      position: "",
-      tenure: "",
-      duties: "",
-    });
+    if (!isEdit) {
+      setFormData({
+        company: "",
+        position: "",
+        tenure: "",
+        duties: "",
+      });
+    }
   }
 
   return (
@@ -74,7 +76,9 @@ export default function Work({ initialData, onSubmit }) {
           />
         </div>
 
-        <button type="submit">Submit</button>
+        <button type="submit">
+          {isEdit ? "Save Changes" : "Add Experience"}
+        </button>
       </form>
     </section>
   );

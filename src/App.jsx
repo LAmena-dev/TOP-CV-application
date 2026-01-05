@@ -5,6 +5,7 @@ import General from "./components/general";
 import CVOutput from "./components/CVOutput";
 
 function App() {
+  const [editingIndex, setEditingIndex] = useState(null);
   const [cvData, setCvData] = useState({
     General: {
       fullName: "",
@@ -33,6 +34,26 @@ function App() {
     }));
   }
 
+  function deleteWork(index) {
+    setCvData((prop) => ({
+      ...prop,
+      Work: prop.Work.filter((_, i) => i !== index),
+    }));
+  }
+
+  function startEditing(index) {
+    setEditingIndex(index);
+  }
+
+  function saveEditedWork(updatedJob) {
+    setCvData((prop) => ({
+      ...prop,
+      Work: prop.Work.map((job, i) => (i === editingIndex ? updatedJob : job)),
+    }));
+
+    setEditingIndex(null);
+  }
+
   return (
     <div>
       <div>
@@ -48,8 +69,24 @@ function App() {
       </div>
 
       <div>
-        <CVOutput data={cvData} />
+        <CVOutput
+          data={cvData}
+          onDeleteWork={deleteWork}
+          onEditWork={startEditing}
+        />
       </div>
+      {editingIndex !== null && (
+        <dialog open>
+          <Work
+            key={editingIndex}
+            initialData={cvData.Work[editingIndex]}
+            onSubmit={saveEditedWork}
+            isEdit
+          />
+
+          <button onClick={() => setEditingIndex(null)}>Cancel</button>
+        </dialog>
+      )}
     </div>
   );
 }
